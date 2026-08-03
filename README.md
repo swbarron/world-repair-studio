@@ -10,6 +10,16 @@ World Repair Studio is a usability-focused desktop tool for inspecting, selectin
 
 > **Fork and original-project credit:** World Repair Studio is an independent fork of [MCA Selector](https://github.com/Querz/mcaselector), created and maintained by [Querz](https://github.com/Querz). The underlying world-reading, chunk-editing, filtering, and rendering foundation comes from MCA Selector. This fork retains its MIT license and copyright notice.
 
+## Interface
+
+### Welcome screen
+
+![World Repair Studio welcome screen](docs/images/world-repair-studio-welcome.png)
+
+### World editor
+
+![World Repair Studio chunk map and editing controls](docs/images/world-repair-studio-editor.png)
+
 ## What this fork adds
 
 - A modern, full-world editor with detached translucent controls.
