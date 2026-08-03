@@ -18,6 +18,7 @@ application.mainClass = 'net.querz.mcaselector.Main'
 java.sourceCompatibility = JavaVersion.VERSION_21
 var copyright = project.findProperty('application.copyright').toString()
 var applicationName = project.findProperty('application.name').toString()
+var applicationBundleId = project.findProperty('application.bundleId').toString()
 var matrixType = project.findProperty("matrixType").toString()
 var projectName = project.name
 var projectVersion = project.version
@@ -144,10 +145,12 @@ runtime {
 			installerName = applicationName
 			imageOptions = [
 				'--icon', 'installer/macos/icon.icns',
+				'--mac-package-identifier', applicationBundleId,
 				'--copyright', copyright
 			]
 			installerOptions = [
 				'--icon', 'installer/macos/icon.icns',
+				'--mac-package-identifier', applicationBundleId,
 				'--copyright', copyright,
 				'--license-file', 'build/licenses/LICENSE'
 			]

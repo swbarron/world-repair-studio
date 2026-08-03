@@ -171,8 +171,8 @@ dialog.edit_nbt.placeholder.no_chunk_data;nie znaleziono danych chunków
 dialog.edit_nbt.placeholder.no_region_file;plik regionu nie istnieje
 dialog.edit_array.index;Indeks
 dialog.edit_array.value;Wartość
-dialog.about.title;O programie MCA Selector
-dialog.about.header;O programie MCA Selector
+dialog.about.title;O programie World Repair Studio
+dialog.about.header;O programie World Repair Studio
 dialog.about.version;Wersja:
 dialog.about.version.unknown;nieznany
 dialog.about.version.check;sprawdź

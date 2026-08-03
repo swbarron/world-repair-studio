@@ -198,7 +198,11 @@ public final class RegionImageGenerator {
 				Image image = null;
 				if (!structuresOnly) {
 					Timer t = new Timer();
-					image = TileImage.generateImage(cachedRegion, zoomLevel);
+					TileImage.RenderData renderData = TileImage.generateRenderData(cachedRegion, zoomLevel);
+					image = renderData == null ? null : renderData.image();
+					if (renderData != null) {
+						tile.setTerrainHeights(renderData.terrainHeights(), zoomLevel);
+					}
 					LOGGER.debug("took {} to generate image for region {}", t, tile.getLocation());
 				}
 

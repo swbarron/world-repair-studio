@@ -4,7 +4,7 @@ import java.awt.datatransfer.*;
 
 public record ClipboardSelection(SelectionData data) implements Transferable, ClipboardOwner {
 
-	public static final DataFlavor SELECTION_DATA_FLAVOR = new DataFlavor(SelectionData.class, "MCA Selector selection");
+	public static final DataFlavor SELECTION_DATA_FLAVOR = new DataFlavor(SelectionData.class, "World Repair Studio selection");
 
 	@Override
 	public DataFlavor[] getTransferDataFlavors() {

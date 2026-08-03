@@ -172,7 +172,7 @@ dialog.edit_nbt.placeholder.no_region_file;bölge dosyası mevcut değil
 dialog.edit_array.index;Dizin
 dialog.edit_array.value;Değer
 dialog.about.title;Hakkında
-dialog.about.header;MCA Selector Hakkında
+dialog.about.header;World Repair Studio Hakkında
 dialog.about.version;Sürüm:
 dialog.about.version.unknown;Bilinmeyen
 dialog.about.version.check;Kontrol

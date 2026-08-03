@@ -172,7 +172,7 @@ dialog.edit_nbt.placeholder.no_region_file;regionfilen existerar inte
 dialog.edit_array.index;Index
 dialog.edit_array.value;Värde
 dialog.about.title;Om
-dialog.about.header;Om MCA Selector
+dialog.about.header;Om World Repair Studio
 dialog.about.version;Version:
 dialog.about.version.unknown;okänt
 dialog.about.version.check;kontrollera

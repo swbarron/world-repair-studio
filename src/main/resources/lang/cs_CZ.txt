@@ -172,7 +172,7 @@ dialog.edit_nbt.placeholder.no_region_file;soubor regionu neexistuje
 dialog.edit_array.index;Index
 dialog.edit_array.value;Hodnota
 dialog.about.title;O aplikaci
-dialog.about.header;O aplikaci MCA Selector
+dialog.about.header;O aplikaci World Repair Studio
 dialog.about.version;Verze:
 dialog.about.version.unknown;neznámá
 dialog.about.version.check;zkontrolovat

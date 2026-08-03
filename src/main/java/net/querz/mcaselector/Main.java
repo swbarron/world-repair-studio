@@ -21,7 +21,7 @@ public class Main {
 
 	public static void main(String[] args) throws ExecutionException, InterruptedException {
 		if (OSHelper.isMac()) {
-			System.setProperty("apple.awt.application.name", "MCA Selector");
+			System.setProperty("apple.awt.application.name", "World Repair Studio");
 		}
 
 		Logging.setLogDir(Config.BASE_LOG_DIR);
@@ -36,7 +36,7 @@ public class Main {
 		}
 
 		if (!CLIJFX.hasJavaFX()) {
-			JOptionPane.showMessageDialog(null, "Please install JavaFX for your Java version (" + System.getProperty("java.version") + ") to use MCA Selector.", "Missing JavaFX", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Please install JavaFX for your Java version (" + System.getProperty("java.version") + ") to use World Repair Studio.", "Missing JavaFX", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
 

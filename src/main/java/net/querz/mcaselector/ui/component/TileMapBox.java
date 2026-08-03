@@ -1,6 +1,5 @@
 package net.querz.mcaselector.ui.component;
 
-import javafx.beans.value.ChangeListener;
 import javafx.css.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,6 +11,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import net.querz.mcaselector.config.ConfigProvider;
@@ -111,11 +111,9 @@ public class TileMapBox extends HBox {
 	public TileMapBox(TileMap tileMap, Stage primaryStage) {
 		getStyleClass().add("tile-map-box");
 		getStylesheets().add(Objects.requireNonNull(TileMapBox.class.getClassLoader().getResource("style/component/tile-map-box.css")).toExternalForm());
-		ChangeListener<Number> sizeListener = (o, r, n) ->
-				tileMap.resize(primaryStage.getWidth(), primaryStage.getHeight());
-		primaryStage.widthProperty().addListener(sizeListener);
-		primaryStage.heightProperty().addListener(sizeListener);
 		setAlignment(Pos.TOP_LEFT);
+		setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		HBox.setHgrow(tileMap, Priority.ALWAYS);
 		getChildren().add(tileMap);
 		bind();
 

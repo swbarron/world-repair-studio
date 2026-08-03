@@ -172,7 +172,7 @@ dialog.edit_nbt.placeholder.no_region_file;リージョンファイルが存在�
 dialog.edit_array.index;インデックス
 dialog.edit_array.value;値
 dialog.about.title;詳細
-dialog.about.header;MCA Selectorについて
+dialog.about.header;World Repair Studioについて
 dialog.about.version;バージョン：
 dialog.about.version.unknown;不明
 dialog.about.version.check;更新

@@ -106,4 +106,11 @@ public class HeightSlider extends HBox {
 	public void setMajorTickUnit(int unit) {
 		slider.setMajorTickUnit(unit);
 	}
+
+	/** Show only the slider and editable value when embedded in a compact toolbar. */
+	public void setCompact(boolean compact) {
+		if (compact) {
+			getChildren().setAll(slider, heightField);
+		}
+	}
 }

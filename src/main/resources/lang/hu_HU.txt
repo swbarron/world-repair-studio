@@ -172,7 +172,7 @@ dialog.edit_nbt.placeholder.no_region_file;régió fájl nem létezik
 dialog.edit_array.index;Index
 dialog.edit_array.value;Érték
 dialog.about.title;Rólunk
-dialog.about.header;Az MCA Selector programról
+dialog.about.header;Az World Repair Studio programról
 dialog.about.version;Verzió:
 dialog.about.version.unknown;ismeretlen
 dialog.about.version.check;ellenőrzés

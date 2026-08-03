@@ -9,7 +9,7 @@ ReadGradleProperty() {
   echo "$value"
 }
 
-projectName='mcaselector'
+projectName='world-repair-studio'
 applicationName=$(ReadGradleProperty 'application.name')
 applicationURL=$(ReadGradleProperty 'application.url')
 applicationAuthor=$(ReadGradleProperty 'application.author')

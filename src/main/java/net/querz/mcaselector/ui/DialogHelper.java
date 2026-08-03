@@ -550,6 +550,9 @@ public class DialogHelper {
 		SelectionData data = new SelectionData(tileMap.getSelection(), ConfigProvider.WORLD.getWorldDirs());
 		ClipboardSelection clipboardSelection = new ClipboardSelection(data);
 		clipboard.setContents(clipboardSelection, tileMap);
+		File dimension = ConfigProvider.WORLD.getRegionDir().getParentFile();
+		net.querz.mcaselector.ui.component.ClipboardContext.setSourceWorld(
+				net.querz.mcaselector.ui.component.WorkspaceToolbar.worldName(dimension));
 	}
 
 	public static void pasteSelectedChunks(TileMap tileMap, Stage primaryStage) {

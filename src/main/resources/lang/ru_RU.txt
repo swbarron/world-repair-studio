@@ -172,7 +172,7 @@ dialog.edit_nbt.placeholder.no_region_file;файл региона не суще
 dialog.edit_array.index;Индекс
 dialog.edit_array.value;Значение
 dialog.about.title;О программе
-dialog.about.header;О программе MCA Selector
+dialog.about.header;О программе World Repair Studio
 dialog.about.version;Версия:
 dialog.about.version.unknown;неизвестно
 dialog.about.version.check;проверить

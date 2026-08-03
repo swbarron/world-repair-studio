@@ -1,71 +1,46 @@
-# MCA Selector
-[![total downloads](https://img.shields.io/github/downloads/Querz/mcaselector/total.svg)](https://github.com/Querz/mcaselector/releases) [![paypal](https://img.shields.io/badge/donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3PV2GDWZL8HCA) [![chat](https://img.shields.io/discord/722924391805223113?logo=discord)](https://discord.gg/h942U8U)
-
-
-#### An external tool to export or delete selected chunks and regions from a world save of Minecraft Java Edition.
----
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/wiki/Querz/mcaselector/images/Default/default.png" alt="MCA Selector window showing chunk and region grid">
+  <img src="src/main/resources/img/icon.png" width="160" alt="World Repair Studio grass-block logo">
 </p>
 
----
+# World Repair Studio
 
-**⚠️ The only official and safe place to download MCA Selector is directly from the official GitHub repository https://github.com/Querz/mcaselector**
+World Repair Studio is a usability-focused desktop tool for inspecting, selecting, copying, moving, exporting, and repairing chunks in Minecraft Java Edition worlds.
 
----
+> **Fork and original-project credit:** World Repair Studio is an independent fork of [MCA Selector](https://github.com/Querz/mcaselector), created and maintained by [Querz](https://github.com/Querz). The underlying world-reading, chunk-editing, filtering, and rendering foundation comes from MCA Selector. This fork retains its MIT license and copyright notice.
 
-**MCA Selector modifies and deletes chunks in your Minecraft world. Please make backups of your world before using.**
+## What this fork adds
 
-[**Download Version <!--vs-->2.8<!--ve--> (Windows Installer)**](https://github.com/Querz/mcaselector/releases/download/2.8/mcaselector-2.8-setup.exe)
+- A modern, full-world editor with detached translucent controls.
+- Fast world tabs for moving chunk selections between open worlds.
+- A simplified isometric view built from real surface colors and terrain heights.
+- A clear starting screen and safer, more readable confirmation dialogs.
+- A workflow centered on repair, regeneration preparation, inspection, and world-to-world transfers.
 
-[**Download Version <!--vs-->2.8<!--ve--> (macOS arm64)**](https://github.com/Querz/mcaselector/releases/download/2.8/mcaselector-2.8-aarch64.dmg)
+## Safety
 
-[**Download Version <!--vs-->2.8<!--ve--> (macOS x64)**](https://github.com/Querz/mcaselector/releases/download/2.8/mcaselector-2.8-x64.dmg)
+World Repair Studio can modify or delete Minecraft chunks. Always make a backup before editing an important world. Selection, inspection, copying, and the isometric view are non-destructive until an editing action is explicitly confirmed.
 
-[**Download Version <!--vs-->2.8<!--ve--> (DEB arm64)**](https://github.com/Querz/mcaselector/releases/download/2.8/mcaselector-2.8-aarch64.deb)
+## Current release
 
-[**Download Version <!--vs-->2.8<!--ve--> (DEB x64)**](https://github.com/Querz/mcaselector/releases/download/2.8/mcaselector-2.8-x64.deb)
+World Repair Studio `1.0.0` is based on MCA Selector 2.8. The current packaged build targets Apple silicon macOS; the Java source remains cross-platform.
 
-[**Download Version <!--vs-->2.8<!--ve--> (RPM arm64)**](https://github.com/Querz/mcaselector/releases/download/2.8/mcaselector-2.8-aarch64.rpm)
+## Building locally
 
-[**Download Version <!--vs-->2.8<!--ve--> (RPM x64)**](https://github.com/Querz/mcaselector/releases/download/2.8/mcaselector-2.8-x64.rpm)
+World Repair Studio requires JDK 21 with JavaFX.
 
-[**Download Version <!--vs-->2.8<!--ve--> (Universal jar)**](https://github.com/Querz/mcaselector/releases/download/2.8/mcaselector-2.8.jar)
+```bash
+./gradlew clean test
+mkdir -p build/licenses
+./installer/init . build/licenses/LICENSE
+./gradlew jpackage
+```
 
----
+The packaged application is written to `build/jpackage`.
 
-## Wiki
+## License and attribution
 
-The wiki can be found [here](https://github.com/Querz/mcaselector/wiki).
+World Repair Studio is distributed under the [MIT License](LICENSE).
 
-## Video Tutorials
-For people who prefer watching a video to understand how the MCA Selector works, there some very good tutorials on 
-YouTube explaining the basics:
-
-* [How To Reset Chunks In Your Minecraft World!](https://www.youtube.com/watch?v=1xx8fwynlRs) by [Farzy](https://www.youtube.com/channel/UCVtz3s3FUxVxBgPl2OWtIJQ)
-* [How To Clear Unwanted Chunks In Minecraft 1.16 | MCASelector Tutorial](https://www.youtube.com/watch?v=ADDTXGRJo20) by [Muriako](https://www.youtube.com/channel/UCpt-MjKkc5X4W7bUFV3Dwrw)
-* [Preparing Your World for the Nether Update! - The Minecraft Survival Guide](https://www.youtube.com/watch?v=1fiyVvoD9jQ) starting at [2:52](https://www.youtube.com/watch?v=1fiyVvoD9jQ&t=2m52s) by [Pixlriffs](https://www.youtube.com/channel/UCgGjBqZZtAjxfpGSba7d6ww)
-* [How To Reset The End Dimension! - The Minecraft Survival Guide](https://www.youtube.com/watch?v=p-2gFkJl_Lo) starting at [8:45](https://www.youtube.com/watch?v=p-2gFkJl_Lo&t=8m45s) by [Pixlriffs](https://www.youtube.com/channel/UCgGjBqZZtAjxfpGSba7d6ww)
-
----
-## Supported Versions
-MCA Selector currently supports the following Minecraft versions:
-
-| Minecraft Version | DataVersion  |
-|-------------------|--------------|
-| 1.2.1 - 1.12.2    | None - 1343  |
-| 1.13 - 1.13.2     | 1444 - 1631  |
-| 1.14 - 1.14.4     | 1901 - 1976  |
-| 1.15 - 1.15.2     | 2200 - 2230  |
-| 1.16 - 1.16.5     | 2566 - 2586  |
-| 1.17 - 1.17.1     | 2724 - 2730  |
-| 1.18 - 1.18.2     | 2825 - 2975  |
-| 1.19 - 1.19.4     | 3105 - 3337  |
-| 1.20 - 1.20.6     | 3463 - 3839  |
-| 1.21 - 1.21.11    | 3953 - 4671  |
-| 26.1 - 26.2+      | 4764 - 4902+ |
-
-There is no guarantee for worlds generated in a Snapshot version to work, even if it is specified in the table above.
-This only represents the current development status towards the next Minecraft release. Old Snapshots of past 
-Minecraft releases are not officially supported.
+- Original MCA Selector copyright © 2018–2026 Querz.
+- World Repair Studio modifications copyright © 2026 Samuel Barron.
+- Minecraft is a trademark of Microsoft. This project is not an official Minecraft product and is not approved by or associated with Mojang or Microsoft.

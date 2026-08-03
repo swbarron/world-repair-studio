@@ -130,7 +130,14 @@ public final class TileImage {
         return finalImage;
     }
 
+	public record RenderData(Image image, short[] terrainHeights) {}
+
 	public static Image generateImage(RegionMCAFile mcaFile, int scale) {
+		RenderData data = generateRenderData(mcaFile, scale);
+		return data == null ? null : data.image();
+	}
+
+	public static RenderData generateRenderData(RegionMCAFile mcaFile, int scale) {
 
 		int size = Tile.SIZE / scale;
 		int chunkSize = Tile.CHUNK_SIZE / scale;
@@ -167,7 +174,7 @@ public final class TileImage {
 
 			writer.setPixels(0, 0, size, size, PixelFormat.getIntArgbPreInstance(), pixelBuffer,  0, size);
 
-			return finalImage;
+			return new RenderData(finalImage, terrainHeights);
 		} catch (Exception ex) {
 			LOGGER.warn("failed to create image for MCAFile {}", mcaFile.getFile().getName(), ex);
 		}

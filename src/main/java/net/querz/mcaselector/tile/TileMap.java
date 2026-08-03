@@ -698,6 +698,58 @@ public class TileMap extends Canvas implements ClipboardOwner {
 		return Tile.getZoomLevel(scale);
 	}
 
+	/** Returns the rendered surface height at a point in the current viewport. */
+	public short getTerrainHeightAtScreen(double screenX, double screenY) {
+		int worldX = (int) Math.floor(offset.getX() + screenX * scale);
+		int worldZ = (int) Math.floor(offset.getY() + screenY * scale);
+		Point2i region = new Point2i(worldX, worldZ).blockToRegion();
+		Tile tile = tiles.get(region.asLong());
+		if (tile == null) {
+			return Short.MIN_VALUE;
+		}
+		int localX = Math.floorMod(worldX, Tile.SIZE);
+		int localZ = Math.floorMod(worldZ, Tile.SIZE);
+		return tile.getTerrainHeight(localX, localZ);
+	}
+
+	/** Ensures visible tiles have the elevation data used by the 3D surface. */
+	public void requestVisibleTerrainData() {
+		int zoomLevel = getZoomLevel();
+		runOnVisibleRegions(region -> {
+			Tile tile = tiles.get(region.asLong());
+			if (tile == null || tile.hasTerrainHeights() || RegionImageGenerator.isLoading(tile) || !tile.getMCAFile().isFile()) {
+				return;
+			}
+			RegionImageGenerator.setLoading(tile, true);
+			RegionImageGenerator.generate(tile, (image, structures, uuid) -> {
+				RegionImageGenerator.setLoading(tile, false);
+				if (image != null) {
+					tile.setImage(image);
+				}
+				if (structures != null) {
+					tile.setStructures(structures);
+				}
+				update();
+			}, zoomLevel, null, true, false, () -> getTilePriority(tile.getLocation()));
+		}, new Point2f(), () -> scale);
+	}
+
+	public TerrainDataProgress getTerrainDataProgress() {
+		int[] counts = new int[2];
+		runOnVisibleRegions(region -> {
+			Tile tile = tiles.get(region.asLong());
+			if (tile != null && tile.getMCAFile().isFile()) {
+				counts[1]++;
+				if (tile.hasTerrainHeights()) {
+					counts[0]++;
+				}
+			}
+		}, new Point2f(), () -> scale);
+		return new TerrainDataProgress(counts[0], counts[1]);
+	}
+
+	public record TerrainDataProgress(int loadedRegions, int totalRegions) {}
+
 	public void setShowRegionGrid(boolean showRegionGrid) {
 		this.showRegionGrid = showRegionGrid;
 		draw();
@@ -1316,6 +1368,15 @@ public class TileMap extends Canvas implements ClipboardOwner {
 
 	@Override
 	public void resize(double width, double height) {
+		// Keep the same world coordinate under the visual center while the
+		// responsive workspace adds, removes, or resizes side panels.
+		double oldWidth = getWidth();
+		double oldHeight = getHeight();
+		if (oldWidth > 0 && oldHeight > 0) {
+			offset = offset.add(
+					(float) ((oldWidth - width) * scale / 2),
+					(float) ((oldHeight - height) * scale / 2));
+		}
 		setWidth(width);
 		setHeight(height);
 		update();

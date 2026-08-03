@@ -15,7 +15,6 @@ import net.querz.mcaselector.util.point.Point2i;
 import net.querz.mcaselector.util.property.DataProperty;
 import net.querz.mcaselector.text.Translation;
 import net.querz.mcaselector.tile.TileMap;
-import net.querz.mcaselector.overlay.Overlay;
 import net.querz.mcaselector.util.validation.ShutdownHooks;
 import java.util.Objects;
 import java.util.concurrent.Executors;
@@ -31,10 +30,7 @@ public class StatusBar extends StackPane {
 	private final Label hoveredRegion = new Label(Translation.STATUS_REGION + ": -, -");
 	private final Label hoveredChunk = new Label(Translation.STATUS_CHUNK + ": -, -");
 	private final Label hoveredBlock = new Label(Translation.STATUS_BLOCK + ": -, -");
-	private final Label totalRegions = new Label(Translation.STATUS_TOTAL + ": 0");
 	private final Label queuedJobs = new Label(Translation.STATUS_QUEUE + ": 0");
-	private final Label structures = new Label(Translation.STATUS_STRUCTURES + ": -");
-	private final Label overlay = new Label(Translation.STATUS_OVERLAY + ": -");
 
 	private final ImageView loadIcon = new ImageView(FileHelper.getIconFromResources("img/load"));
 	private final BorderPane bp = new BorderPane();
@@ -42,6 +38,8 @@ public class StatusBar extends StackPane {
 
 	public StatusBar(TileMap tileMap) {
 		getStyleClass().add("status-bar");
+		setMaxWidth(Region.USE_PREF_SIZE);
+		setMaxHeight(Region.USE_PREF_SIZE);
 		getStylesheets().add(Objects.requireNonNull(StatusBar.class.getClassLoader().getResource("style/component/status-bar.css")).toExternalForm());
 		grid.getStyleClass().add("status-bar-grid");
 
@@ -52,18 +50,9 @@ public class StatusBar extends StackPane {
 		grid.add(hoveredChunk, 1, 0, 1, 1);
 		grid.add(hoveredRegion, 2, 0, 1 ,1);
 		grid.add(selectedChunks, 3, 0, 1, 1);
-		grid.add(totalRegions, 4, 0, 1, 1);
-		grid.add(queuedJobs, 5, 0, 1, 1);
-		grid.add(overlay, 6, 0, 1, 1);
-		grid.add(structures, 7, 0, 1, 1);
-
-		int lastColumnIndex = grid.getColumnCount() - 1;
-		for (int i = 0; i < lastColumnIndex; i++) {
-			ColumnConstraints constraints = new ColumnConstraints();
-			constraints.setMinWidth(140);
-			constraints.setFillWidth(true);
-			grid.getColumnConstraints().add(constraints);
-		}
+		grid.add(queuedJobs, 4, 0, 1, 1);
+		queuedJobs.setVisible(false);
+		queuedJobs.setManaged(false);
 
 		StackPane.setAlignment(grid, Pos.CENTER_LEFT);
 		getChildren().add(grid);
@@ -105,7 +94,8 @@ public class StatusBar extends StackPane {
 	private void update(TileMap tileMap) {
 		selectedChunks.setText(Translation.STATUS_SELECTED + ": " + (tileMap.getSelection().isInverted() ? "\u221e" : tileMap.getSelectedChunks()));
 		queuedJobs.setText(Translation.STATUS_QUEUE + ": " + JobHandler.getActiveJobs());
-		totalRegions.setText(Translation.STATUS_TOTAL + ": " + tileMap.getLoadedTiles());
+		queuedJobs.setVisible(JobHandler.getActiveJobs() > 0);
+		queuedJobs.setManaged(queuedJobs.isVisible());
 		Point2i b = tileMap.getHoveredBlock();
 		if (b != null) {
 			hoveredBlock.setText(Translation.STATUS_BLOCK + ": " + b.getX() + ", " + b.getZ());
@@ -113,34 +103,10 @@ public class StatusBar extends StackPane {
 			hoveredChunk.setText(Translation.STATUS_CHUNK + ": " + c.getX() + ", " + c.getZ());
 			Point2i r = b.blockToRegion();
 			hoveredRegion.setText(Translation.STATUS_REGION + ": " + r.getX() + ", " + r.getZ());
-			updateOverlay(tileMap, c);
 		} else {
 			hoveredBlock.setText(Translation.STATUS_BLOCK + ": -, -");
 			hoveredChunk.setText(Translation.STATUS_CHUNK + ": -, -");
 			hoveredRegion.setText(Translation.STATUS_REGION + ": -, -");
-			updateOverlay(tileMap, null);
-		}
-		String[] hoveredStructures = tileMap.getHoveredStructures();
-		if (hoveredStructures != null && hoveredStructures.length > 0) {
-			structures.setText(Translation.STATUS_STRUCTURES + ": " + hoveredStructures[0] + (hoveredStructures.length > 1 ? ", ..." : ""));
-		} else {
-			structures.setText(Translation.STATUS_STRUCTURES + ": -");
-		}
-	}
-
-	private void updateOverlay(TileMap tileMap, Point2i chunk) {
-		if (tileMap.getOverlay() != null) {
-			Overlay p = tileMap.getOverlay();
-			String s = p.getShortMultiValues();
-			if (!p.isActive()) {
-				overlay.setText(Translation.STATUS_OVERLAY + ": " + p.getType() + "(" + p.min() + ", " + p.max() + (s == null ? "" : ", " + s) + "), -");
-			} else if (chunk != null) {
-				tileMap.getOverlayPool().getHoveredChunkValue(chunk, v -> overlay.setText(Translation.STATUS_OVERLAY + ": " + p.getType() + "(" + p.min() + ", " + p.max() + (s == null ? "" : ", " + s) + "), " + (v == null ? "-" : v)));
-			} else {
-				overlay.setText(Translation.STATUS_OVERLAY + ": " + p.getType() + "(" + p.min() + ", " + p.max() + (s == null ? "" : ", " + s) + "), -");
-			}
-		} else {
-			overlay.setText(Translation.STATUS_OVERLAY + ": -, -");
 		}
 	}
 }

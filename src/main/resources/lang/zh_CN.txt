@@ -172,7 +172,7 @@ dialog.edit_nbt.placeholder.no_region_file;区域文件不存在
 dialog.edit_array.index;索引
 dialog.edit_array.value;值
 dialog.about.title;关于
-dialog.about.header;关于 MCA Selector
+dialog.about.header;关于 World Repair Studio
 dialog.about.version;版本：
 dialog.about.version.unknown;未知
 dialog.about.version.check;检查

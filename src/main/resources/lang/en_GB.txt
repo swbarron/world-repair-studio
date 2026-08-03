@@ -172,7 +172,7 @@ dialog.edit_nbt.placeholder.no_region_file;region file does not exist
 dialog.edit_array.index;Index
 dialog.edit_array.value;Value
 dialog.about.title;About
-dialog.about.header;About MCA Selector
+dialog.about.header;About World Repair Studio
 dialog.about.version;Version:
 dialog.about.version.unknown;unknown
 dialog.about.version.check;check

@@ -172,7 +172,7 @@ dialog.edit_nbt.placeholder.no_region_file;지역 파일이 존재하지 않습�
 dialog.edit_array.index;인덱스
 dialog.edit_array.value;값
 dialog.about.title;이 프로그램에 대해
-dialog.about.header;MCA Selector에 대해
+dialog.about.header;World Repair Studio에 대해
 dialog.about.version;버전:
 dialog.about.version.unknown;알 수 없음
 dialog.about.version.check;확인하기

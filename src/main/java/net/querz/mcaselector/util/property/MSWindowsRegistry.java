@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 
 public final class MSWindowsRegistry {
 
-	private static final String subKey = "Software\\MCA Selector";
+	private static final String subKey = "Software\\World Repair Studio";
 
 	private MSWindowsRegistry() {}
 

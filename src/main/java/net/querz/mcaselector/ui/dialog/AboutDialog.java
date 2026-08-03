@@ -51,7 +51,7 @@ public class AboutDialog extends Alert {
 				e -> handleCheckUpdate(finalApplicationVersion,
 						b -> versionLabel.getChildren().set(versionLabel.getChildren().size() - 1, b)));
 
-		String copyright = "\u00A9 Querz";
+		String copyright = "\u00A9 2018 - 2026 Querz; modifications \u00A9 2026 Samuel Barron";
 		try {
 			copyright = FileHelper.getManifestAttributes().getValue("Copyright");
 		} catch (IOException ex) {
@@ -69,7 +69,7 @@ public class AboutDialog extends Alert {
 		ImageView imgView = new ImageView(githubMark);
 		imgView.setScaleX(0.5);
 		imgView.setScaleY(0.5);
-		Hyperlink source = UIFactory.hyperlink("GitHub", "https://github.com/Querz/mcaselector", imgView);
+		Hyperlink source = UIFactory.hyperlink("GitHub", "https://github.com/swbarron/world-repair-studio", imgView);
 		grid.add(source, 1, 3);
 
 		Label disclaimer = new Label("NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.");
@@ -90,7 +90,7 @@ public class AboutDialog extends Alert {
 
 		// needs to run in separate thread so we can see the "checking..." label
 		Thread lookup = new Thread(() -> {
-			VersionChecker checker = new VersionChecker("Querz", "mcaselector");
+			VersionChecker checker = new VersionChecker("swbarron", "world-repair-studio");
 			try {
 				VersionChecker.VersionData version = checker.fetchLatestVersion();
 				if (version != null && version.isNewerThan(applicationVersion)) {

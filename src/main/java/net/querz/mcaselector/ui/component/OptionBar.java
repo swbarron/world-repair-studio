@@ -16,17 +16,13 @@ import net.querz.mcaselector.tile.CoordinateStyle;
 import net.querz.mcaselector.ui.dialog.ConfirmationDialog;
 import net.querz.mcaselector.util.github.VersionChecker;
 import net.querz.mcaselector.io.FileHelper;
-import net.querz.mcaselector.selection.ClipboardSelection;
 import net.querz.mcaselector.tile.TileMap;
 import net.querz.mcaselector.io.CacheHelper;
 import net.querz.mcaselector.text.Translation;
 import net.querz.mcaselector.ui.DialogHelper;
 import net.querz.mcaselector.ui.UIFactory;
 import net.querz.mcaselector.version.mapping.registry.StructureRegistry;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
+import net.querz.mcaselector.util.validation.OSHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -105,6 +101,7 @@ public class OptionBar extends BorderPane {
 	public OptionBar(TileMap tileMap, Stage primaryStage) {
 		getStyleClass().add("option-bar-box");
 		menuBar.getStyleClass().add("option-bar");
+		menuBar.setUseSystemMenuBar(OSHelper.isMac());
 
 		getStylesheets().add(Objects.requireNonNull(OptionBar.class.getClassLoader().getResource("style/component/option-bar.css")).toExternalForm());
 
@@ -267,12 +264,20 @@ public class OptionBar extends BorderPane {
 		setSelectionDependentMenuItemsEnabled(tileMap, tileMap.getSelectedChunks(), tileMap.getSelection().isInverted());
 		setWorldDependentMenuItemsEnabled(false, tileMap, primaryStage);
 
-		Toolkit.getDefaultToolkit().getSystemClipboard().addFlavorListener(e -> paste.setDisable(!hasValidClipboardContent(tileMap) || tileMap.getDisabled()));
-
 		setLeft(menuBar);
-		setCenter(hSlider);
+		if (OSHelper.isMac()) {
+			// Menus live in the native macOS menu bar. Keep this node in the scene so
+			// JavaFX retains ownership of the menus, but do not reserve window space.
+			setMinHeight(0);
+			setPrefHeight(0);
+			setMaxHeight(0);
+		}
 
 		checkForUpdateAsync();
+	}
+
+	public HeightSlider getHeightSlider() {
+		return hSlider;
 	}
 
 	private void checkForUpdateAsync() {
@@ -328,7 +333,10 @@ public class OptionBar extends BorderPane {
 		importChunks.setDisable(!enabled);
 		invert.setDisable(!enabled);
 		invertRegions.setDisable(!enabled || tileMap.getSelectedChunks() == 0);
-		paste.setDisable(!enabled || !hasValidClipboardContent(tileMap));
+		// Querying the native macOS clipboard while a world is loading can block
+		// the JavaFX application thread. Keep Paste discoverable and validate the
+		// clipboard only when the command is explicitly invoked.
+		paste.setDisable(!enabled);
 		nextOverlay.setDisable(!enabled);
 		nextOverlayType.setDisable(!enabled);
 		sumSelection.setDisable(!enabled || tileMap.getOverlay() == null || tileMap.getSelectedChunks() == 0);
@@ -414,17 +422,6 @@ public class OptionBar extends BorderPane {
 		copy.setDisable(selected == 0 && !inverted);
 		invertRegions.setDisable(selected == 0 || inverted);
 		sumSelection.setDisable(tileMap.getOverlay() == null || selected == 0 && !inverted);
-	}
-
-	private boolean hasValidClipboardContent(TileMap tileMap) {
-		try {
-			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-			Transferable content = clipboard.getContents(tileMap);
-			DataFlavor[] flavors = content.getTransferDataFlavors();
-			return flavors.length == 1 && flavors[0].equals(ClipboardSelection.SELECTION_DATA_FLAVOR);
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 	public void setRenderHeight(int height) {

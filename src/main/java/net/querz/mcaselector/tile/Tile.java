@@ -29,6 +29,8 @@ public class Tile {
 
 	Image image;
 	boolean loaded = false;
+	private short[] terrainHeights;
+	private int terrainHeightScale = 1;
 
 	Image overlay;
 	boolean overlayLoaded = false;
@@ -109,6 +111,7 @@ public class Tile {
 			image.cancel();
 			if (img) {
 				image = null;
+				terrainHeights = null;
 				structures = null;
 			}
 		}
@@ -133,6 +136,25 @@ public class Tile {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public void setTerrainHeights(short[] terrainHeights, int scale) {
+		this.terrainHeights = terrainHeights;
+		this.terrainHeightScale = Math.max(1, scale);
+	}
+
+	public boolean hasTerrainHeights() {
+		return terrainHeights != null;
+	}
+
+	public short getTerrainHeight(int localX, int localZ) {
+		if (terrainHeights == null) {
+			return Short.MIN_VALUE;
+		}
+		int size = SIZE / terrainHeightScale;
+		int x = Math.max(0, Math.min(size - 1, localX / terrainHeightScale));
+		int z = Math.max(0, Math.min(size - 1, localZ / terrainHeightScale));
+		return terrainHeights[z * size + x];
 	}
 
 	public void setStructures(Long2ObjectOpenHashMap<String[]> structures) {

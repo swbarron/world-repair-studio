@@ -29,7 +29,7 @@ sed -i -E "s/echo -n [0-9]+\.[0-9]+(\.[0-9]+)?/echo -n $applicationVersion/g" '.
 sed -i -E "s/Automated version update to [0-9]+\.[0-9]+(\.[0-9]+)?/Automated version update to $applicationVersion/g" '.github/workflows/release.yml'
 
 # update issue template
-sed -i -E "s/Version of MCA Selector \[e\.g\. [0-9]+\.[0-9]+(\.[0-9]+)?\]/Version of MCA Selector [e.g. $applicationVersion]/g" '.github/ISSUE_TEMPLATE/bug_report.md'
+sed -i -E "s/Version of World Repair Studio \[e\.g\. [0-9]+\.[0-9]+(\.[0-9]+)?\]/Version of World Repair Studio [e.g. $applicationVersion]/g" '.github/ISSUE_TEMPLATE/bug_report.md'
 
 Len() {
   local res=${1//[^.]}
