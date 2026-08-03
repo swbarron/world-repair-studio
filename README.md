@@ -6,6 +6,8 @@
 
 World Repair Studio is a usability-focused desktop tool for inspecting, selecting, copying, moving, exporting, and repairing chunks in Minecraft Java Edition worlds.
 
+[♥ Support World Repair Studio on Ko-fi](https://ko-fi.com/swbarron)
+
 > **Fork and original-project credit:** World Repair Studio is an independent fork of [MCA Selector](https://github.com/Querz/mcaselector), created and maintained by [Querz](https://github.com/Querz). The underlying world-reading, chunk-editing, filtering, and rendering foundation comes from MCA Selector. This fork retains its MIT license and copyright notice.
 
 ## What this fork adds
@@ -22,7 +24,18 @@ World Repair Studio can modify or delete Minecraft chunks. Always make a backup 
 
 ## Current release
 
-World Repair Studio `1.0.0` is based on MCA Selector 2.8. The current packaged build targets Apple silicon macOS; the Java source remains cross-platform.
+World Repair Studio `1.0.0` is based on MCA Selector 2.8.
+
+### Downloads
+
+- [macOS — Apple Silicon](https://github.com/swbarron/world-repair-studio/releases/download/v1.0.0/world-repair-studio-1.0.0-macos-arm64.dmg)
+- [macOS — Intel](https://github.com/swbarron/world-repair-studio/releases/download/v1.0.0/world-repair-studio-1.0.0-macos-x64.dmg)
+- [Windows — x64 installer](https://github.com/swbarron/world-repair-studio/releases/download/v1.0.0/world-repair-studio-1.0.0-windows-x64.exe)
+- [Linux — x64 Debian/Ubuntu package](https://github.com/swbarron/world-repair-studio/releases/download/v1.0.0/world-repair-studio-1.0.0-linux-x64.deb)
+- [Linux — x64 Fedora/RHEL package](https://github.com/swbarron/world-repair-studio/releases/download/v1.0.0/world-repair-studio-1.0.0-linux-x64.rpm)
+- [Universal Java archive](https://github.com/swbarron/world-repair-studio/releases/download/v1.0.0/world-repair-studio-1.0.0-universal.jar)
+
+The current community builds are not notarized or commercially code-signed, so your operating system may ask you to confirm that you trust the download.
 
 ## Building locally
 

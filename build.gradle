@@ -133,11 +133,20 @@ runtime {
 	jpackage {
 		jvmArgs = ['-Xmx4096m']
 		if (OperatingSystem.current().isWindows()) {
+			installerType = "exe"
 			imageName = applicationName
-			skipInstaller = true
+			installerName = applicationName
 			imageOptions = [
 				'--icon', 'installer/windows/icon.ico',
 				'--copyright', copyright
+			]
+			installerOptions = [
+				'--icon', 'installer/windows/icon.ico',
+				'--copyright', copyright,
+				'--license-file', 'build/licenses/LICENSE',
+				'--win-dir-chooser',
+				'--win-menu',
+				'--win-shortcut'
 			]
 		} else if (OperatingSystem.current().isMacOsX()) {
 			installerType = "dmg"

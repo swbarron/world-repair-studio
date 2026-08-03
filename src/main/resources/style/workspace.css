@@ -460,6 +460,23 @@
     -fx-text-fill: #718086;
 }
 
+.workspace-root .welcome-support {
+    -fx-background-color: rgba(105, 190, 102, 0.10);
+    -fx-border-color: rgba(63, 145, 75, 0.34);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #2f7540;
+    -fx-font-weight: 700;
+    -fx-pref-height: 34;
+    -fx-max-height: 34;
+    -fx-padding: 0 18 0 18;
+}
+
+.workspace-root .welcome-support:hover {
+    -fx-background-color: rgba(105, 190, 102, 0.18);
+    -fx-border-color: rgba(63, 145, 75, 0.52);
+}
+
 .workspace-root .recent-world {
     -fx-background-color: rgba(244, 247, 248, 0.72);
     -fx-border-color: rgba(255, 255, 255, 0.55);

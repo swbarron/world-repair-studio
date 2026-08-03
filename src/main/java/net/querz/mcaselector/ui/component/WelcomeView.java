@@ -14,12 +14,14 @@ import net.querz.mcaselector.config.GlobalConfig;
 import net.querz.mcaselector.io.FileHelper;
 import net.querz.mcaselector.tile.TileMap;
 import net.querz.mcaselector.ui.DialogHelper;
+import net.querz.mcaselector.ui.UIFactory;
 
 import java.io.File;
 import java.util.Map;
 
 /** Calm starting state that explains the workflow before exposing editing controls. */
 public class WelcomeView extends StackPane {
+	private static final String SUPPORT_URL = "https://ko-fi.com/swbarron";
 
 	public WelcomeView(TileMap tileMap, Stage primaryStage) {
 		getStyleClass().add("welcome-view");
@@ -43,8 +45,11 @@ public class WelcomeView extends StackPane {
 		open.setOnAction(e -> DialogHelper.openWorld(tileMap, primaryStage));
 		Label note = new Label("Choose the folder that contains level.dat");
 		note.getStyleClass().add("welcome-note");
+		Button support = new Button("♥  Support on Ko-fi");
+		support.getStyleClass().add("welcome-support");
+		support.setOnAction(e -> UIFactory.openURL(SUPPORT_URL));
 
-		VBox card = new VBox(13, logo, eyebrow, title, explanation, open, note);
+		VBox card = new VBox(13, logo, eyebrow, title, explanation, open, note, support);
 		card.getStyleClass().add("welcome-card");
 		card.setAlignment(Pos.CENTER);
 
