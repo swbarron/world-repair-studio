@@ -71,6 +71,8 @@ public class AboutDialog extends Alert {
 		imgView.setScaleY(0.5);
 		Hyperlink source = UIFactory.hyperlink("GitHub", "https://github.com/swbarron/world-repair-studio", imgView);
 		grid.add(source, 1, 3);
+		grid.add(new Label("Support:"), 0, 4);
+		grid.add(UIFactory.hyperlink("Ko-fi ↗", "https://ko-fi.com/swbarron", null), 1, 4);
 
 		Label disclaimer = new Label("NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.");
 		disclaimer.getStyleClass().add("disclaimer-label");

@@ -1,0 +1,142 @@
+name: Build and publish downloads
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version from gradle.properties
+        required: true
+        default: 1.0.0
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: ${{ matrix.label }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - id: macos-arm64
+            label: macOS Apple Silicon
+            os: macos-latest
+            java_arch: aarch64
+            type: dmg
+            suffix: macos-arm64.dmg
+          - id: macos-x64
+            label: macOS Intel
+            os: macos-15-intel
+            java_arch: x64
+            type: dmg
+            suffix: macos-x64.dmg
+          - id: windows-x64
+            label: Windows x64
+            os: windows-latest
+            java_arch: x64
+            type: exe
+            suffix: windows-x64.exe
+          - id: linux-deb-x64
+            label: Linux DEB x64
+            os: ubuntu-24.04
+            java_arch: x64
+            type: deb
+            suffix: linux-x64.deb
+          - id: linux-rpm-x64
+            label: Linux RPM x64
+            os: ubuntu-24.04
+            java_arch: x64
+            type: rpm
+            suffix: linux-x64.rpm
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up JavaFX JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 21
+          java-package: jdk+fx
+          architecture: ${{ matrix.java_arch }}
+          cache: gradle
+
+      - name: Install Linux packaging tools
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          if [ "${{ matrix.type }}" = "deb" ]; then
+            sudo apt-get install -y fakeroot
+          else
+            sudo apt-get install -y rpm
+          fi
+
+      - name: Build and package
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x gradlew installer/init
+          ./gradlew clean test shadowJar --no-daemon
+          mkdir -p build/licenses
+          ./installer/init . build/licenses/LICENSE
+          ./gradlew jpackage -PmatrixType=${{ matrix.type }} --no-daemon
+
+          VERSION=$(sed -n 's/^version=//p' gradle.properties | tr -d '\r')
+          if [ "$VERSION" != "${{ inputs.version }}" ]; then
+            echo "Requested version ${{ inputs.version }} does not match gradle.properties ($VERSION)" >&2
+            exit 1
+          fi
+
+          mkdir -p dist
+          PACKAGE=$(find build/jpackage -maxdepth 1 -type f -name '*.${{ matrix.type }}' -print -quit)
+          test -n "$PACKAGE"
+          cp "$PACKAGE" "dist/world-repair-studio-${VERSION}-${{ matrix.suffix }}"
+
+          if [ "${{ matrix.id }}" = "linux-deb-x64" ]; then
+            cp "build/libs/world-repair-studio-${VERSION}-all.jar" \
+              "dist/world-repair-studio-${VERSION}-universal.jar"
+          fi
+
+      - name: Upload package
+        uses: actions/upload-artifact@v7
+        with:
+          name: world-repair-studio-${{ matrix.id }}
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    name: Publish GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download packages
+        uses: actions/download-artifact@v8
+        with:
+          pattern: world-repair-studio-*
+          path: release-assets
+          merge-multiple: true
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: v${{ inputs.version }}
+          target_commitish: master
+          name: World Repair Studio ${{ inputs.version }}
+          body: |
+            World Repair Studio ${{ inputs.version }} is the first usability-focused release of the MCA Selector fork.
+
+            Downloads are available for macOS Apple Silicon, macOS Intel, Windows x64, and Linux x64. A universal Java archive is also included.
+
+            Back up important Minecraft worlds before making destructive edits.
+          files: release-assets/*
+          fail_on_unmatched_files: true

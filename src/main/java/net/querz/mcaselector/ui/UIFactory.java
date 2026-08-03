@@ -149,16 +149,18 @@ public final class UIFactory {
 		} else {
 			hyperlink = new Hyperlink(text, graphic);
 		}
-		hyperlink.setOnAction(e -> {
-			if (Desktop.isDesktopSupported()) {
-				try {
-					Desktop.getDesktop().browse(new URI(url));
-				} catch (IOException | URISyntaxException ex) {
-					LOGGER.warn("cannot open url using a default browser", ex);
-				}
-			}
-		});
+		hyperlink.setOnAction(e -> openURL(url));
 		return hyperlink;
+	}
+
+	public static void openURL(String url) {
+		if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(new URI(url));
+			} catch (IOException | URISyntaxException ex) {
+				LOGGER.warn("cannot open url using a default browser", ex);
+			}
+		}
 	}
 
 	public static Hyperlink explorerLink(Translation text, File file, Node graphic) {
